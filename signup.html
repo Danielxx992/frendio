@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Join Frendio - Meet People Worldwide</title>
+<meta name="description" content="Join Frendio and meet new people around the world.">
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;min-height:100vh;font-family:Arial,sans-serif;
+  color:#fff;background:radial-gradient(circle at top,#29205b,#101326 65%);
+  display:flex;align-items:center;justify-content:center;padding:25px
+}
+.container{width:100%;max-width:440px}
+.logo{text-align:center;margin-bottom:25px}
+.logo h1{font-size:38px;margin:0;color:#a994ff}
+.logo p{color:#b8b6ca;margin-top:8px}
+.card{
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);
+  border-radius:20px;padding:30px;box-shadow:0 20px 60px #0005
+}
+h2{text-align:center;margin:0 0 8px}
+.subtitle{text-align:center;color:#aaa8bb;font-size:14px;margin-bottom:25px}
+label{display:block;font-size:13px;margin:17px 0 8px;color:#ddd}
+input,select{
+  width:100%;padding:14px;border-radius:10px;
+  border:1px solid #46415e;background:#17182d;color:white;
+  font-size:15px;outline:none
+}
+input:focus,select:focus{border-color:#967bff}
+select option{background:#17182d}
+.check{display:flex;align-items:flex-start;gap:10px;margin-top:20px}
+.check input{width:17px;height:17px;margin-top:2px}
+.check label{margin:0;line-height:1.5;color:#ccc}
+a{color:#b6a3ff;text-decoration:none}
+button{
+  width:100%;padding:15px;margin-top:23px;border:0;border-radius:11px;
+  color:white;background:linear-gradient(100deg,#7455ed,#a052dc);
+  font-size:16px;font-weight:bold;cursor:pointer
+}
+button:disabled{opacity:.6;cursor:wait}
+#message{font-size:14px;text-align:center;margin-top:18px;line-height:1.5}
+.footer{text-align:center;color:#88869b;font-size:12px;margin-top:20px}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="logo">
+    <h1>Frendio</h1>
+    <p>Meet People. Make Connections.</p>
+  </div>
+
+  <div class="card">
+    <h2>Create your account</h2>
+    <p class="subtitle">Start meeting people from around the world.</p>
+
+    <form id="signupForm">
+      <label for="displayName">Display name</label>
+      <input id="displayName" maxlength="30" minlength="2"
+        placeholder="Enter your name" required>
+
+      <label for="gender">Gender</label>
+      <select id="gender" required>
+        <option value="">Select gender</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="prefer_not_to_say">Prefer not to say</option>
+      </select>
+
+      <label for="country">Country</label>
+      <select id="country" required>
+        <option value="">Select your country</option>
+        <option value="IN">India</option>
+        <option value="US">United States</option>
+        <option value="GB">United Kingdom</option>
+        <option value="CA">Canada</option>
+        <option value="AU">Australia</option>
+        <option value="DE">Germany</option>
+        <option value="FR">France</option>
+        <option value="BR">Brazil</option>
+        <option value="JP">Japan</option>
+        <option value="OTHER">Other countries (not supported yet)</option>
+      </select>
+
+      <div class="check">
+        <input type="checkbox" id="age" required>
+        <label for="age">I confirm that I am 18 years old or older.</label>
+      </div>
+
+      <div class="check">
+        <input type="checkbox" id="terms" required>
+        <label for="terms">I agree to the <a href="terms.html">Terms</a>
+          and <a href="privacy.html">Privacy Policy</a>.</label>
+      </div>
+
+      <button type="submit" id="submitBtn">Create Account</button>
+    </form>
+
+    <div id="message" role="status"></div>
+  </div>
+
+  <div class="footer">
+    By joining Frendio, you agree to use the platform responsibly.
+  </div>
+</div>
+
+<script>
+const API_BASE = "https://frendio-api.xdanielbusinessx.workers.dev/";
+
+const form = document.getElementById("signupForm");
+const message = document.getElementById("message");
+const button = document.getElementById("submitBtn");
+
+form.addEventListener("submit", async function(event) {
+  event.preventDefault();
+
+  const countryCode = document.getElementById("country").value;
+
+  if (countryCode === "OTHER") {
+    message.textContent = "Please select a supported country for now.";
+    return;
+  }
+
+  if (!API_BASE.startsWith("https://")) {
+    message.textContent = "The API address has not been configured yet.";
+    return;
+  }
+
+  button.disabled = true;
+  button.textContent = "Creating account...";
+  message.textContent = "";
+
+  const data = {
+    display_name: document.getElementById("displayName").value.trim(),
+    gender: document.getElementById("gender").value,
+    country_code: countryCode,
+    age_confirmed: document.getElementById("age").checked
+  };
+
+  try {
+    const response = await fetch(API_BASE + "/api/register", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(data)
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.message || "Registration failed.");
+    }
+
+    message.textContent =
+      "Account created! Passkey setup will be available in the next step.";
+
+    message.style.color = "#91efb0";
+    form.reset();
+
+  } catch (error) {
+    message.textContent = error.message;
+    message.style.color = "#ff9999";
+  } finally {
+    button.disabled = false;
+    button.textContent = "Create Account";
+  }
+});
+</script>
+</body>
+</html>
