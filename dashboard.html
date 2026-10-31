@@ -1,0 +1,124 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Frendio - Meet People Worldwide</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;background:#0b1020;color:#fff;
+ font-family:Arial,sans-serif;
+}
+header{
+ display:flex;justify-content:space-between;align-items:center;
+ padding:20px 7%;border-bottom:1px solid #252b40;
+}
+.logo{font-size:29px;font-weight:800;color:#a991ff}
+header a{color:#c8c5d8;text-decoration:none;margin-left:20px}
+main{max-width:1050px;margin:auto;padding:45px 20px}
+.welcome{text-align:center;margin-bottom:35px}
+.welcome h1{font-size:36px;margin:0 0 12px}
+.welcome p{color:#a6abc0}
+.online{
+ max-width:500px;margin:25px auto 40px;padding:30px;
+ text-align:center;border:1px solid #51418b;
+ border-radius:20px;
+ background:linear-gradient(135deg,#211b48,#171d35);
+}
+.online-number{font-size:52px;font-weight:800;color:#a994ff}
+.online-label{font-size:18px;margin-top:8px}
+.demo{font-size:11px;color:#aaa;margin-top:12px}
+.section-title{text-align:center;font-size:24px;margin-bottom:20px}
+.grid{
+ display:grid;grid-template-columns:repeat(2,1fr);
+ gap:18px;max-width:750px;margin:auto;
+}
+.option{
+ text-decoration:none;color:white;text-align:center;
+ padding:30px 15px;border:1px solid #303750;
+ background:#171e32;border-radius:17px;
+ transition:.2s;
+}
+.option:hover{border-color:#9479ff;transform:translateY(-4px)}
+.emoji{font-size:38px;margin-bottom:15px}
+.option h3{margin:0 0 8px}
+.option p{font-size:13px;color:#a8adc0;margin:0}
+footer{
+ text-align:center;padding:35px 15px;color:#858ba1;
+ font-size:13px;margin-top:35px
+}
+@media(max-width:550px){
+ .welcome h1{font-size:29px}
+ .grid{gap:12px}
+ .option{padding:25px 10px}
+ header{padding:17px 5%}
+ header a{margin-left:10px;font-size:13px}
+}
+</style>
+</head>
+<body>
+
+<header>
+ <div class="logo">Frendio</div>
+ <nav>
+  <a href="index.html">Home</a>
+  <a href="signup.html">Account</a>
+ </nav>
+</header>
+
+<main>
+ <section class="welcome">
+  <h1>Meet People. Make Connections.</h1>
+  <p>Discover new friends and conversations from around the world.</p>
+ </section>
+
+ <section class="online">
+  <div class="online-number">10K+</div>
+  <div class="online-label">People Online Worldwide</div>
+  <div class="demo">Demo display — live count will be connected later</div>
+ </section>
+
+ <h2 class="section-title">Who would you like to meet?</h2>
+
+ <section class="grid">
+  <a class="option" href="#" onclick="comingSoon(event,'Text Chat')">
+   <div class="emoji">💬</div>
+   <h3>Text Chat</h3>
+   <p>Meet strangers and chat instantly.</p>
+  </a>
+
+  <a class="option" href="#" onclick="comingSoon(event,'Video Chat')">
+   <div class="emoji">📹</div>
+   <h3>Video Chat</h3>
+   <p>Connect face to face worldwide.</p>
+  </a>
+
+  <a class="option" href="#" onclick="comingSoon(event,'Audio Chat')">
+   <div class="emoji">🎧</div>
+   <h3>Audio Chat</h3>
+   <p>Talk with someone new.</p>
+  </a>
+
+  <a class="option" href="#" onclick="comingSoon(event,'Find Friends')">
+   <div class="emoji">🌍</div>
+   <h3>Find Friends</h3>
+   <p>Discover new connections.</p>
+  </a>
+ </section>
+</main>
+
+<footer>
+ © 2026 Frendio · Meet people worldwide · 18+ only
+</footer>
+
+<script>
+function comingSoon(event,feature){
+ event.preventDefault();
+ alert(feature+" is coming soon to Frendio!");
+}
+</script>
+
+</body>
+</html>
