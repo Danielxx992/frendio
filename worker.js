@@ -393,6 +393,7 @@ export class Matchmaker extends DurableObject {
 
       return Response.json({ success: true, message: "You left matching" });
     }
+    // GitHub deployment test - Frendio
 
     return Response.json({ success: false, message: "Not found" }, { status: 404 });
   }
